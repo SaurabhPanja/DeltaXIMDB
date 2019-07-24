@@ -7,9 +7,15 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="../multiselect/styles/multiselect.css" rel="stylesheet"/>
-    <script src="../multiselect/multiselect.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.3.1/dist/multiple-select.min.css">
     <!-- <link rel="stylesheet" href="../style.css"> -->
+    <script>
+      UPLOADCARE_PUBLIC_KEY = '4c6c0f7fc481aaa7115a';
+      UPLOADCARE_IMAGE_SHRINK = '512x512';
+      UPLOADCARE_IMAGES_ONLY = true;
+    </script>
+    
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
   
     <title>DeltaX IMDB</title>
   </head>
@@ -24,10 +30,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Movies <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/movies">Movies <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Actors</a>
+            <a class="nav-link" href="/actors">Actors</a>
           </li>
 
         </ul>

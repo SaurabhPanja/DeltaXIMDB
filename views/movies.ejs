@@ -1,6 +1,6 @@
 <% include ./partials/header.ejs%>
 <h1>Add New Movie</h1>
-<form action="/movies/new" method="POST">
+<form action="/movies/new" method="POST" autocomplete="off">
   <div class="form-group row">
     <label for="movieName" class="col-sm-2 col-form-label">Movie Name</label>
     <div class="col-sm-10">
@@ -23,25 +23,20 @@
     <label for="poster" class="col-sm-2 col-form-label">Poster</label>
     <div class="col-sm-10">
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-            </div>
-            <div class="custom-file">
-              <input name="poster" type="file" class="custom-file-input" id="inputGroupFile01" accept="image/*">
-              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-            </div>
-          </div>
+            <input name="poster" type="hidden" role="uploadcare-uploader" data-image-shrink="512x512" />    
         </div>
+      </div>
   </div>
   <div class="form-group row">
       <label for="cast" class="col-sm-2 col-form-label">Cast</label>
       <div class="col-sm-10">
-          <select name="cast" id='select-cast' multiple>
-              <option value='1'>Akshay Kumar</option>
-              <option value='2'>Hrithik Roshan</option>
-              <option value='3'>Tapsee Pannu</option>
-              <option value='4'>Kangana Ranaut</option>
-              <option value='5'>Shahrukh Khan</option>
+          <select name="cast" id='select' multiple="multiple" autocomplete="false">
+              <option value='Akshay Kumar'>Akshay Kumar</option>
+              <option value='Hrithik Roshan'>Hrithik Roshan</option>
+              <option value='Tapsee Pannu'>Tapsee Pannu</option>
+              <option value='Kangana Ranaut'>Kangana Ranaut</option>
+              <option value='Shahrukh Khan'>Shahrukh Khan</option>
+              <option value="Saurabh Panja">Saurabh Panja</option>
             </select>
       </div>
   </div>

@@ -39,11 +39,36 @@ app.get('/movies/new',(req,res)=>{
 });
 
 app.post('/movies/new',(req,res)=>{
-  res.send(req.body);
+  Movie.create({
+    name          : req.body.movieName,
+    yearOfRelease : req.body.yearOfRelease,
+    plot          : req.body.plot,
+    poster        : req.body.poster
+  },(err,data)=>{
+    if(err){
+      console.log(err);
+    }else{
+      console.log(data);
+    }
+  });
+  res.redirect('/');
 });
 //read
 //update
 //delete
+
+//actors
+
+//index
+app.get('/actors',(req,res)=>{
+  Actor.find({},function(err,data){
+    if(err){
+      console.log(err);
+    }else{
+      res.render('actors',{actorData:data});
+    }
+  })
+});
 
 app.get('*',(req,res)=>{
   res.send('Error 404');
