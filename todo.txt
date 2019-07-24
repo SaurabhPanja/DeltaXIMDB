@@ -1,0 +1,6 @@
+normalization is the first prefernce 
+date validation => year should be 4 digits only
+image will be taken care using flex box //done
+validationjs
+add react
+add docker

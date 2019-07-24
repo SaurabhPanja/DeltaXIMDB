@@ -1,0 +1,31 @@
+<%include ./partials/header.ejs%>
+<a class="btn btn-success m-1 float-right"href="/movies/new">Add Movie +</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Poster</th>
+      <th scope="col">Movie Name</th>
+      <th scope="col">Year of Release</th>
+      <th scope="col">Plot</th>
+      <th scope="col">Cast</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%movieData.forEach((movie)=>{%>
+      <tr>
+        <td>
+          <img class="img img-fluid" src="<%=movie.poster%>" alt="<%=movie.name%> poster">
+        </td>
+        <td><%=movie.name%></td>
+        <td><%=movie.yearOfRelease%></td>
+        <td><%=movie.plot%></td>
+        <td><%=movie.actors%></td>
+        <td>Edit</td>
+      </tr>
+    <%});%>
+  </tbody>
+</table>
+
+
+<%include ./partials/footer.ejs%>
