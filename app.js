@@ -89,13 +89,45 @@ app.get('/movies/:id/edit',(req,res)=>{
       console.log(err);
     }else{
       // res.send(movieData);
-      res.render('moviesEdit',{movieData:movieData});
+      Actor.find({},(err,actorData)=>{
+        if(err){
+          console.log(err);
+        }else{
+          res.render('moviesEdit',{movieData:movieData,actorData:actorData});
+        }
+      });
     }
-  })
+  });
+});
+
+app.put('/movies/:id',(req,res)=>{
+  Movie.findByIdAndUpdate(req.params.id,{
+    name : req.body.movieName,
+    yearOfRelease : req.body.yearOfRelease,
+    plot : req.body.plot,
+    poster : req.body.poster,
+    actors : req.body.cast
+  },(err,data)=>{
+    if(err){
+      console.log(err);
+    }else{
+      console.log(data);
+    }
+  });
+  res.redirect('/movies');
+  // res.send(req.body);
 });
 
 //delete
-
+app.delete("/movies/:id",(req,res)=>{
+  Movie.findByIdAndDelete(req.params.id,(err)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.redirect('/');
+    }
+  });
+});
 //actors
 
 //index
@@ -129,7 +161,9 @@ app.post('/actors/new',(req,res)=>{
   });
   res.redirect('/actors');
 });
+//edit actor
 
+//delte actor
 
 
 app.get('*',(req,res)=>{
