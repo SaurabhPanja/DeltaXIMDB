@@ -4,26 +4,26 @@
   <div class="form-group row">
     <label for="movieName" class="col-sm-2 col-form-label">Movie Name</label>
     <div class="col-sm-10">
-      <input name="movieName" type="text" class="form-control">
+      <input name="movieName" type="text" class="form-control" value="<%=movieData.name%>">
     </div>
   </div>
   <div class="form-group row">
     <label for="yearOfRelease" class="col-sm-2 col-form-label">Year of Release</label>
     <div class="col-sm-10">
-      <input name="yearOfRelease" type="number" class="form-control">
+      <input name="yearOfRelease" type="number" class="form-control" value="<%=movieData.yearOfRelease%>">
     </div>
   </div>
   <div class="form-group row">
     <label for="plot" class="col-sm-2 col-form-label">Plot</label>
     <div class="col-sm-10">
-      <textarea name="plot" type="number" class="form-control"></textarea>
+      <textarea name="plot" type="number" class="form-control"><%=movieData.plot%></textarea>
     </div>
   </div>
   <div class="form-group row">
     <label for="poster" class="col-sm-2 col-form-label">Poster</label>
     <div class="col-sm-10">
         <div class="input-group mb-3">
-            <input name="poster" type="hidden" role="uploadcare-uploader" data-image-shrink="512x512" />    
+            <input name="poster" type="hidden" role="uploadcare-uploader" data-image-shrink="512x512" value="<%=movieData.poster%>"/>    
         </div>
       </div>
   </div>
@@ -31,7 +31,7 @@
       <label for="cast" class="col-sm-2 col-form-label">Cast</label>
       <div class="col-sm-8">
           <select name="cast" id='select' multiple="multiple" autocomplete="false">
-            <%actorData.forEach(actor=>{%>
+            <%movieData.actors.forEach(actor=>{%>
               <option value='<%=actor._id%>'><%=actor.Name%></option>
             <%});%>
             </select>

@@ -2,17 +2,22 @@
 //Saurabh Panja
 
 //app dependencies
-const express    = require('express'),
-      app        = express(),
-      bodyParser = require('body-parser'),
-      mongoose   = require('mongoose'),
-      Actor      = require('./models/actor');
-      Movie      = require('./models/movie');
+const express           = require('express'),
+      app               = express(),
+      bodyParser        = require('body-parser'),
+      mongoose          = require('mongoose'),
+      methodOverride    = require('method-override'),
+      expressSanitizer = require('express-sanitizer'),
+      Actor             = require('./models/actor'),
+      Movie             = require('./models/movie');
 
 //app init
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
+app.use(expressSanitizer());
+app.use(methodOverride("_method"));
+
 
 //mongodb connectoin
 mongoose.connect('mongodb://localhost/DeltaXIMDB', { useNewUrlParser: true });
@@ -24,7 +29,7 @@ app.get('/',(req,res)=>{
 
 //index
 app.get('/movies',(req,res)=>{
-  Movie.find({},(err,data)=>{
+  Movie.find({}).populate('actors').exec((err,data)=>{
     if(err){
       console.log(err);
     }else {
@@ -35,7 +40,13 @@ app.get('/movies',(req,res)=>{
 });
 //create
 app.get('/movies/new',(req,res)=>{
-  res.render('movies');
+  Actor.find({},(err,data)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.render('movies',{actorData:data});
+    }
+  })
 });
 
 app.post('/movies/new',(req,res)=>{
@@ -43,25 +54,53 @@ app.post('/movies/new',(req,res)=>{
     name          : req.body.movieName,
     yearOfRelease : req.body.yearOfRelease,
     plot          : req.body.plot,
-    poster        : req.body.poster
-  },(err,data)=>{
+    poster        : req.body.poster,
+    actors        : req.body.cast
+  },(err,movieData)=>{
     if(err){
       console.log(err);
     }else{
-      console.log(data);
+      // console.log(movieData);
+      //find cast by the id and push movie into it.
+      const cast = req.body.cast;
+      cast.forEach(element => {
+        Actor.findById(element,(err,actorData)=>{
+          if(err){
+            console.log(err);
+          }else{
+            actorData.movies.push(movieData);
+            actorData.save();
+          }
+        });
+      });
     }
   });
+
   res.redirect('/');
+  // res.send(req.body);
 });
 //read
 //update
+
+app.get('/movies/:id/edit',(req,res)=>{
+  // res.send('edit page');
+  Movie.findById(req.params.id).populate('actors').exec((err,movieData)=>{
+    if(err){
+      console.log(err);
+    }else{
+      // res.send(movieData);
+      res.render('moviesEdit',{movieData:movieData});
+    }
+  })
+});
+
 //delete
 
 //actors
 
 //index
 app.get('/actors',(req,res)=>{
-  Actor.find({},function(err,data){
+  Actor.find({}).populate('movies').exec(function(err,data){
     if(err){
       console.log(err);
     }else{
@@ -69,6 +108,29 @@ app.get('/actors',(req,res)=>{
     }
   })
 });
+//create a new actor
+app.get('/actors/new',(req,res)=>{
+  // res.send('I am actor new')
+  res.render('actorNew')
+});
+
+app.post('/actors/new',(req,res)=>{
+  Actor.create({
+    Name:req.body.actorName,
+    Sex : req.body.sex,
+    DOB : req.body.DOB,
+    Bio : req.body.bio
+  },(err,data)=>{
+    if(err){
+      console.log(err);
+    }else{
+      console.log(data);
+    }
+  });
+  res.redirect('/actors');
+});
+
+
 
 app.get('*',(req,res)=>{
   res.send('Error 404');

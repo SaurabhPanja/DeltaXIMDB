@@ -13,8 +13,11 @@
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.5",
+    "express-sanitizer": "^1.0.5",
     "fs": "0.0.1-security",
+    "method-override": "^3.0.0",
     "mongoose": "^5.6.5",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "multi.js": "^0.5.1"
   }
 }

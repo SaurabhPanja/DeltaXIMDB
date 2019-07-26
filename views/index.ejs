@@ -20,8 +20,10 @@
         <td><%=movie.name%></td>
         <td><%=movie.yearOfRelease%></td>
         <td><%=movie.plot%></td>
-        <td><%=movie.actors%></td>
-        <td>Edit</td>
+        <td><%movie.actors.forEach(actorName=>{%>
+          <%=actorName.Name%>
+        <%})%></td>
+        <td><a href="movies/<%=movie._id%>/edit">Edit</a></td>
       </tr>
     <%});%>
   </tbody>

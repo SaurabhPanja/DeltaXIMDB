@@ -32,8 +32,10 @@
                     <%=data.Bio%>
                 </div>
                 <div class="col-lg-2">
-                    <%=data.movies%>
+                    <%data.movies.forEach(movieName=>{%>
+                        <%=movieName.name%>
+                    <%});%>
                 </div>
-            <%}) %>
+            <%})%>
         </div>
 <% include ./partials/footer.ejs%>
