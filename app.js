@@ -146,7 +146,7 @@ app.get('/actors',(req,res)=>{
     if(err){
       console.log(err);
     }else{
-      res.render('actors',{actorData:data});
+      res.send({actorData:data});
     }
   })
 });
@@ -158,9 +158,9 @@ app.get('/actors/new',(req,res)=>{
 
 app.post('/actors/new',(req,res)=>{
   Actor.create({
-    Name:req.body.actorName,
+    Name:req.body.name,
     Sex : req.body.sex,
-    DOB : req.body.DOB,
+    DOB : req.body.dob,
     Bio : req.body.bio
   },(err,data)=>{
     if(err){
@@ -169,7 +169,8 @@ app.post('/actors/new',(req,res)=>{
       console.log(data);
     }
   });
-  res.redirect('/actors');
+  // res.redirect('/actors');
+  res.send("Actor Succesfully added");
 });
 //edit actor
 
