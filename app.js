@@ -9,7 +9,8 @@ const express           = require('express'),
       methodOverride    = require('method-override'),
       // expressSanitizer  = require('express-sanitizer'),
       Actor             = require('./models/actor'),
-      Movie             = require('./models/movie');
+      Movie             = require('./models/movie'),
+      PORT              = process.env.PORT || 8080;
 
 //app init
 app.set('view engine','ejs');
@@ -230,7 +231,7 @@ app.get('*',(req,res)=>{
   res.send('Error 404');
 })
 
-app.listen('8080',()=>{
-  console.log("Port number 8080 check karna baba*");
+app.listen(PORT,()=>{
+  console.log("Port number "+PORT+" check karna baba*");
 });
 
