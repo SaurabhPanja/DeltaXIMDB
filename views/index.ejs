@@ -25,7 +25,7 @@
           <%=actorName.Name%>
           <hr>
         <%})%></td>
-        <td><a href="movies/<%=movie._id%>/edit?method=PUT">Edit</a></td>
+        <td><a class="btn btn-warning" href="movies/<%=movie._id%>/edit?method=PUT">Edit</a></td>
         <td>
         <form action="/movies/<%=movie._id%>?_method=DELETE" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>
