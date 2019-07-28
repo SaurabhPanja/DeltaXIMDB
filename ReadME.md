@@ -6,8 +6,7 @@ You can visit website here [visit website](https://deltaximdb.herokuapp.com/ "De
 
 ## Installation
 
-Installation steps are as follow.
-
+Clone this repo and run the below command in the command line from the folder.
 ```
 npm install
 ```
