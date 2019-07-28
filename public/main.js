@@ -39,6 +39,8 @@ $(()=>{
             contentType: 'application/json',
             success: function(response) {
                 const select = $('select[name="cast"]');
+                // const nonSelectedWrapper = $('.non-selected-wrapper');
+                const searchInput = $('.search-input');
     
                 select.html('');
                 // console.log(select,response);
@@ -46,6 +48,13 @@ $(()=>{
                     select.append(
                     `<option value='${actor._id}'>${actor.Name}</option>`
                     );
+                // let i = -1;
+                // nonSelectedWrapper.html('');
+                // response.actorData.forEach(function(actor){
+                //     nonSelectedWrapper.append(
+                //         `<a tabindex="0" class="item" role="button" data-value="${actor._id}" multi-index="${i++}">${actor.Name}</a>`
+                //     );
+                // })
                     console.log(actor);
                 });
             }

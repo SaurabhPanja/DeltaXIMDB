@@ -7,7 +7,7 @@ const express           = require('express'),
       bodyParser        = require('body-parser'),
       mongoose          = require('mongoose'),
       methodOverride    = require('method-override'),
-      expressSanitizer = require('express-sanitizer'),
+      // expressSanitizer  = require('express-sanitizer'),
       Actor             = require('./models/actor'),
       Movie             = require('./models/movie');
 
@@ -16,19 +16,22 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
-app.use(expressSanitizer());
+// app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 
 
 //mongodb connectoin
-mongoose.connect('mongodb://localhost/DeltaXIMDB', { useNewUrlParser: true });
+// developement
+// mongoose.connect('mongodb://localhost/DeltaXIMDB', { useNewUrlParser: true });
+// production
+mongoose.connect('mongodb://saurabhpanja:saurabh1@ds255917.mlab.com:55917/deltaximdb',{useNewUrlParser : true});
 
 //index
 app.get('/',(req,res)=>{
   res.redirect('/movies');
 });
 
-//index
+//show all data
 app.get('/movies',(req,res)=>{
   Movie.find({}).populate('actors').exec((err,data)=>{
     if(err){
@@ -80,7 +83,7 @@ app.post('/movies/new',(req,res)=>{
   res.redirect('/');
   // res.send(req.body);
 });
-//read
+
 //update
 
 app.get('/movies/:id/edit',(req,res)=>{
@@ -124,8 +127,8 @@ app.put('/movies/:id',(req,res)=>{
       });
     }
   });
-  // res.redirect('/movies');
-  res.send(req.body);
+  res.redirect('/movies');
+  // res.send(req.body);
 });
 
 //delete
@@ -140,7 +143,7 @@ app.delete("/movies/:id",(req,res)=>{
 });
 //actors
 
-//index
+//actor api to movie page
 app.get('/actors',(req,res)=>{
   Actor.find({}).populate('movies').exec(function(err,data){
     if(err){
@@ -150,6 +153,18 @@ app.get('/actors',(req,res)=>{
     }
   })
 });
+//show all actors
+app.get('/actors/all',(req,res)=>{
+  Actor.find({}).populate('movies').exec(function(err,data){
+    if(err){
+      console.log(err);
+    }else{
+      res.render('actors',{actorData:data});
+      // res.send(data);
+    }
+  })
+});
+
 //create a new actor
 app.get('/actors/new',(req,res)=>{
   // res.send('I am actor new')
@@ -174,7 +189,41 @@ app.post('/actors/new',(req,res)=>{
 });
 //edit actor
 
-//delte actor
+app.get('/actors/:id/edit',(req,res)=>{
+  Actor.findById(req.params.id,(err,data)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.render('actorsEdit',{actorData:data});
+      // res.send(data);
+    }
+  })
+})
+
+app.put('/actors/:id/edit',(req,res)=>{
+  Actor.findByIdAndUpdate(req.params.id,{
+    Name : req.body.actorName,
+    Sex  : req.body.sex,
+    DOB  : req.body.DOB,
+    Bio  : req.body.bio
+  },(err,data)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.redirect('/actors/all');
+    }
+  });
+  // res.send(req.body);
+})
+
+//delete actor
+app.delete('/actors/:id/delete',(req,res)=>{
+  // res.send(req.params.id);
+  Actor.findByIdAndDelete(req.params.id,(err,data)=>{
+    res.redirect('/actors/all');
+  })
+  // res.redirect('/');
+});
 
 
 app.get('*',(req,res)=>{
@@ -184,3 +233,4 @@ app.get('*',(req,res)=>{
 app.listen('8080',()=>{
   console.log("Port number 8080 check karna baba*");
 });
+

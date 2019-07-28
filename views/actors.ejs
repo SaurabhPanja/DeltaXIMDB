@@ -1,41 +1,40 @@
 <% include ./partials/header.ejs%>
-    <div class="row font-weight-bold">
-       <div class="col-lg-2">
-            Name
-       </div>
-       <div class="col-lg-2">
-            Sex
-       </div>
-       <div class="col-lg-2">
-            DOB
-       </div>
-       <div class="col-lg-4">
-            Bio
-       </div>
-       <div class="col-lg-2">
-            Movie(s)
-       </div> 
-    </div>
-    <hr>
-    <div class="row">
-            <% actorData.forEach(data=>{%>
-                <div class="col-lg-2">
-                    <%=data.Name%>
-                </div>
-                <div class="col-lg-2">
-                    <%=data.Sex%>
-                </div>
-                <div class="col-lg-2">
-                    <%=data.DOB.toDateString()%>
-                </div>
-                <div class="col-lg-4">
-                    <%=data.Bio%>
-                </div>
-                <div class="col-lg-2">
-                    <%data.movies.forEach(movieName=>{%>
+<!-- <a class="btn btn-primary" href="/actors/new">Add Actor +</a> -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Sex</th>
+                <th scope="col">D</th>
+                <th scope="col">O</th>
+                <th scope="col">B</th>
+                <th scope="col">Movie(s)</th>
+                <th scope="col">Bio</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+                 <% actorData.forEach(data=>{%>
+                    <tr>
+                    <td><%=data.Name%></td>
+                    <td><%=data.Sex%></td>
+                    <td colspan="3"><%=data.DOB.toDateString()%></td>
+                    <td><%data.movies.forEach(movieName=>{%>
                         <%=movieName.name%>
-                    <%});%>
-                </div>
-            <%})%>
-        </div>
+                    <%});%></td>
+                    <td><%=data.Bio%></td>
+                    <td>
+                        <a class="btn btn-warning" href="/actors/<%=data._id%>/edit">Edit</a>
+                    </td>
+                    <td>
+                        <form action="/actors/<%=data._id%>/delete?_method=DELETE" method="POST">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>                        
+                <%})%>
+        </tbody>
+    </table>
+
 <% include ./partials/footer.ejs%>

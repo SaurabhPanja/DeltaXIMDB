@@ -1,6 +1,6 @@
 <%include ./partials/header.ejs%>
 <a class="btn btn-success m-1 float-right"href="/movies/new">Add Movie +</a>
-<table class="table">
+<table class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">Poster</th>
@@ -9,6 +9,7 @@
       <th scope="col">Plot</th>
       <th scope="col">Cast</th>
       <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -22,8 +23,9 @@
         <td><%=movie.plot%></td>
         <td><%movie.actors.forEach(actorName=>{%>
           <%=actorName.Name%>
+          <hr>
         <%})%></td>
-        <td><a href="movies/<%=movie._id%>/edit">Edit</a></td>
+        <td><a href="movies/<%=movie._id%>/edit?method=PUT">Edit</a></td>
         <td>
         <form action="/movies/<%=movie._id%>?_method=DELETE" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>
@@ -33,6 +35,5 @@
     <%});%>
   </tbody>
 </table>
-
 
 <%include ./partials/footer.ejs%>
