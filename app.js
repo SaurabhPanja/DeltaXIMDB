@@ -55,34 +55,34 @@ app.get('/movies/new',(req,res)=>{
 });
 
 app.post('/movies/new',(req,res)=>{
-  Movie.create({
-    name          : req.body.movieName,
-    yearOfRelease : req.body.yearOfRelease,
-    plot          : req.body.plot,
-    poster        : req.body.poster,
-    actors        : req.body.cast
-  },(err,movieData)=>{
-    if(err){
-      console.log(err);
-    }else{
-      // console.log(movieData);
-      //find cast by the id and push movie into it.
-      const cast = req.body.cast;
-      cast.forEach(element => {
-        Actor.findById(element,(err,actorData)=>{
-          if(err){
-            console.log(err);
-          }else{
-            actorData.movies.push(movieData);
-            actorData.save();
-          }
-        });
-      });
-    }
-  });
+  // Movie.create({
+  //   name          : req.body.movieName,
+  //   yearOfRelease : req.body.yearOfRelease,
+  //   plot          : req.body.plot,
+  //   poster        : req.body.poster,
+  //   actors        : req.body.cast
+  // },(err,movieData)=>{
+  //   if(err){
+  //     console.log(err);
+  //   }else{
+  //     // console.log(movieData);
+  //     //find cast by the id and push movie into it.
+  //     const cast = req.body.cast;
+  //     cast.forEach(element => {
+  //       Actor.findById(element,(err,actorData)=>{
+  //         if(err){
+  //           console.log(err);
+  //         }else{
+  //           actorData.movies.push(movieData);
+  //           actorData.save();
+  //         }
+  //       });
+  //     });
+  //   }
+  // });
 
-  res.redirect('/');
-  // res.send(req.body);
+  // res.redirect('/');
+  res.send(req.body);
 });
 
 //update

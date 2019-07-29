@@ -1,40 +1,55 @@
 <% include ./partials/header.ejs%>
 <h1>Add New Movie</h1>
-<form action="/movies/new" method="POST" autocomplete="off">
+<form action="/movies/new" class="needs-validation" method="POST" autocomplete="off" novalidate>
   <div class="form-group row">
     <label for="movieName" class="col-sm-2 col-form-label">Movie Name</label>
     <div class="col-sm-10">
-      <input name="movieName" type="text" class="form-control">
+      <input name="movieName" type="text" class="form-control" required>
+      <div class="invalid-feedback">
+        A movie without movie name! Not possible bro
+      </div>
     </div>
   </div>
   <div class="form-group row">
     <label for="yearOfRelease" class="col-sm-2 col-form-label">Year of Release</label>
     <div class="col-sm-10">
-      <input name="yearOfRelease" type="number" class="form-control">
+      <input name="yearOfRelease" type="number" class="form-control" required>
+      <div class="invalid-feedback">
+        Woah! What sort of movie it is that has not been released yet!
+      </div>
     </div>
   </div>
   <div class="form-group row">
     <label for="plot" class="col-sm-2 col-form-label">Plot</label>
     <div class="col-sm-10">
-      <textarea name="plot" type="number" class="form-control" rows="5"></textarea>
+      <textarea name="plot" type="number" class="form-control" rows="5" required></textarea>
+      <div class="invalid-feedback">
+        Movie without plot! Really bro .. really!
+      </div>
     </div>
   </div>
   <div class="form-group row">
     <label for="poster" class="col-sm-2 col-form-label">Poster</label>
     <div class="col-sm-10">
         <div class="input-group mb-3">
-            <input name="poster" type="hidden" role="uploadcare-uploader" data-image-shrink="512x512" />    
+            <input name="poster" type="hidden" role="uploadcare-uploader" data-image-shrink="512x512" required/>    
+            <div class="invalid-feedback">
+              Is it so adult that you can't even put a picture of it?
+            </div>
         </div>
       </div>
   </div>
   <div class="form-group row">
-      <label for="cast" class="col-sm-2 col-form-label">Cast</label>
+      <label for="cast" class="col-sm-2 col-form-label needs-validation">Cast</label>
       <div class="col-sm-8">
-          <select name="cast" id='select' multiple="multiple" autocomplete="false">
+          <select name="cast" id='select' multiple="multiple" autocomplete="false" required>
             <%actorData.forEach(actor=>{%>
               <option value='<%=actor._id%>'><%=actor.Name%></option>
             <%});%>
             </select>
+            <div class="invalid-feedback">
+              Is it no actors or no body did the acting!
+            </div>
       </div>
       <div class="col-sm-2">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add Actor+</button>
@@ -119,6 +134,23 @@
 			multi(select, {
 				search_placeholder: 'Search actor...',
       });
+      (function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
